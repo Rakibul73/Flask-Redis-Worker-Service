@@ -19,25 +19,25 @@ This project implements a `web service` and a `worker service` using `Python Fla
 The project consists of two main components:
 
 1. Web Service (`web_service.py`):
-    - Exposes a RESTful API with an endpoint to receive tasks.
-    - Sends tasks to the worker service via Redis.
-    - Returns appropriate HTTP status codes and messages for successful and unsuccessful requests.
+    - The code creates a Python Flask web service that exposes a RESTful API with an endpoint (`/tasks`) to receive tasks.
+    - Tasks received by the web service are sent to the worker service via Redis using appropriate Redis data structures (`redis_client.lpush` to add tasks to a Redis list).
+    - The web service returns appropriate HTTP status codes and messages for successful and unsuccessful requests (`400` for missing task data, `500` for internal server error).
 
 2. Worker Service (`worker_service.py`):
-    - Listens for tasks from the web service through Redis.
-    - Processes tasks (ex - summing the values provided) and stores the results back in Redis.
-    - Handles multiple tasks concurrently using worker threads.
+    - The code also implements a Python Flask worker service that listens for tasks from the web service through Redis.
+    - Once a task is received, the worker service processes it (summing the values provided) and stores the result back in Redis (`redis_client.lpush` to add processed data to another Redis list).
+    - The worker service is designed to handle multiple tasks concurrently using multiple worker threads (`threading.Thread`).
 
-Both services use Redis as a message broker for communication, utilizing appropriate Redis data structures and operations for sending tasks, receiving results, and managing queues.
+Both services use Redis as a message broker for communication, They use appropriate Redis data structures and operations for sending tasks (`redis_client.lpush`), receiving results (`redis_client.rpop`), and managing queues (`task_queue` and `processed_data` lists).
 
 <hr>
 
 ## Project Structure
 
 
-├── web_service.py  `Python Flask web service`
-├── worker_service.py `Python Flask worker service`
-└── testing.py `Script for concurrent testing`
+├── web_service.py  `Python Flask web service`<br>
+├── worker_service.py `Python Flask worker service`<br>
+└── testing.py `Script for concurrent testing`<br>
 
 <hr>
 
