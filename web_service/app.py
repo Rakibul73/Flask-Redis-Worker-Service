@@ -5,7 +5,7 @@ import redis
 
 app = Flask(__name__)
 # Initialize Redis client
-redis_client = redis.Redis(host='red-cogop0u3e1ms73e6rnj0', port=6379, db=0)
+redis_client = redis.Redis(host='redis://red-cogop0u3e1ms73e6rnj0', port=6379, db=0)
 
 
 # endpoint to receive tasks via POST request
