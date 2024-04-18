@@ -1,12 +1,11 @@
 # web_service.py
 import json
-import os
 from flask import Flask, jsonify, request
 import redis
 
 app = Flask(__name__)
 # Initialize Redis client
-redis_client = redis.from_url(os.environ['REDIS_URL'])
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
 
 # endpoint to receive tasks via POST request
