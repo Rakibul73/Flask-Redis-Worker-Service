@@ -7,6 +7,10 @@ app = Flask(__name__)
 # Initialize Redis client
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
+@app.route('/' , methods=['GET'])
+def index():
+    return jsonify({"Flask Web Service Running"})
+
 # endpoint to receive tasks via POST request
 @app.route('/tasks', methods=['POST'])
 def receive_task():

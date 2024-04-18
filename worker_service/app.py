@@ -1,12 +1,16 @@
 # worker_service.py
 import json
 import time
-from flask import Flask
+from flask import Flask, jsonify
 import redis
 import threading
 
 app = Flask(__name__)
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
+
+@app.route('/' , methods=['GET'])
+def index():
+    return jsonify({"Flask Worker Service Running"})
 
 # Function to process tasks retrieved from the Redis queue indefinitely
 def process_task():
